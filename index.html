@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GREEN ENERGY LEARNING | สื่อการเรียนการสอน</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <nav class="main-nav">
+    <div class="brand"><a href="index.html">🌱 GREEN ENERGY LEARNING</a></div>
+    <div class="menu-wrap">
+      <button class="menu-toggle" id="menuToggle" type="button" aria-label="เปิดเมนู" aria-expanded="false">☰</button>
+      <div class="menu-dropdown" id="menuDropdown">
+        <a class="active" href="index.html">หน้าหลัก</a>
+        <div class="menu-subwrap">
+          <button class="menu-content-btn" id="contentNav" type="button" aria-expanded="false">เนื้อหา <span>▾</span></button>
+          <div class="menu-subdropdown" id="contentSubmenu"></div>
+        </div>
+        <a href="benefits.html">ประโยชน์</a>
+        <a href="laws.html">กฎหมายและมาตรฐาน</a>
+        <a href="test.html">แบบทดสอบ</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main class="redesign-home">
+<section class="new-hero home-screen" id="homeScreen">
+  <div class="new-hero-inner home-screen-inner">
+    <div class="home-copy">
+      <span class="tag">GREEN ENERGY LEARNING</span>
+      <h1>สื่อการเรียนการสอนแบบจำลองโรงผลิตพลังงานจากหลุมฝังกลบขยะ</h1>
+      <p>เรียนรู้หลักการทำงานและส่วนประกอบของแบบจำลองผ่านหัวข้อการเรียนรู้ 10 หัวข้อ</p>
+      <div class="hero-action"><button class="btn" id="startLearning" type="button">เริ่มเรียนรู้ →</button></div>
+    </div>
+    <figure class="new-hero-image">
+      <img src="model-placeholder.jpeg" alt="แบบจำลองโรงผลิตพลังงานจากหลุมฝังกลบขยะ">
+    </figure>
+  </div>
+</section>
+
+<section class="topics-screen" id="topicsScreen" aria-hidden="true">
+  <div class="topics-section topics-picker">
+    <div class="topics-head">
+      <div>
+        <span class="tag">LEARNING TOPICS</span>
+        <h2>เลือกหัวข้อการเรียนรู้</h2>
+        <p>กดไอคอนหัวข้อที่ต้องการ เพื่อเข้าสู่เนื้อหาของหัวข้อนั้นโดยตรง</p>
+      </div>
+      <button class="back-home" id="backHome" type="button">← หน้าแรก</button>
+    </div>
+    <div class="topic-slider-wrap">
+      <button class="topic-slider-btn" id="topicsPrev" type="button" aria-label="เลื่อนหัวข้อไปทางซ้าย">‹</button>
+      <div class="topic-icon-grid topic-slider" id="topicIconGrid"></div>
+      <button class="topic-slider-btn" id="topicsNext" type="button" aria-label="เลื่อนหัวข้อไปทางขวา">›</button>
+    </div>
+  </div>
+</section>
+
+<section class="topic-content-screen" id="topicContentScreen" aria-hidden="true">
+  <div class="topic-content-wrap">
+    <div class="topic-content-topbar">
+      <button class="back-home" id="backTopics" type="button">← กลับไป 10 หัวข้อ</button>
+      <div class="detail-nav-inline">
+        <button id="detailPrev" type="button" aria-label="หัวข้อก่อนหน้า">← ก่อนหน้า</button>
+        <span id="detailProgress">01 / 10</span>
+        <button id="detailNext" type="button" aria-label="หัวข้อถัดไป">ถัดไป →</button>
+      </div>
+    </div>
+    <div class="topic-detail topic-detail-full" id="topicDetail">
+      <div class="topic-detail-image">
+        <img id="detailImage" src="" alt="">
+        <div class="topic-caption" id="detailCaption"></div>
+      </div>
+      <article class="topic-detail-content">
+        <div class="detail-number" id="detailNumber"></div>
+        <h2 id="detailTitle"></h2>
+        <div id="detailText"></div>
+      </article>
+    </div>
+    <div class="detail-nav-bottom" aria-label="นำทางระหว่างหัวข้อ">
+      <button id="detailPrevBottom" type="button">← หัวข้อก่อนหน้า</button>
+      <button id="backTopicsBottom" type="button">กลับไปเลือก 10 หัวข้อ</button>
+      <button id="detailNextBottom" type="button">หัวข้อถัดไป →</button>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer><div class="footer-inner">แผนกปิโตรเคมีและเคมีอุตสาหกรรม<br><span class="mini">วิทยาลัยเทคโนโลยีไออาร์พีซี</span></div></footer>
+
+<script>
+const menuToggle=document.getElementById('menuToggle');
+const menuDropdown=document.getElementById('menuDropdown');
+menuToggle.addEventListener('click',()=>{
+  const open=menuDropdown.classList.toggle('menu-open');
+  menuToggle.setAttribute('aria-expanded',String(open));
+});
+document.addEventListener('click',e=>{
+  if(!e.target.closest('.menu-wrap')){
+    menuDropdown.classList.remove('menu-open');
+    menuToggle.setAttribute('aria-expanded','false');
+  }
+});
+
+const topics = [
+{
+ title:"หลุมฝังกลบและก๊าซหลุมฝังกลบ",
+ image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Landfill%20gas%20collection%20system.JPG",
+ alt:"ระบบรวบรวมก๊าซจากหลุมฝังกลบ",
+ caption:"ภาพตัวอย่างระบบรวบรวมก๊าซจากหลุมฝังกลบ (Wikimedia Commons / US EPA)",
+ html:`<p>เมื่อขยะที่มีสารอินทรีย์ถูกนำไปฝังกลบ จุลินทรีย์จะย่อยสลายสารอินทรีย์ในสภาวะที่มีออกซิเจนจำกัดและเกิดก๊าซหลุมฝังกลบ หรือ Landfill Gas (LFG) โดยองค์ประกอบหลักโดยประมาณคือมีเทนและคาร์บอนไดออกไซด์ มีเทนเป็นส่วนสำคัญที่ทำให้ก๊าซชนิดนี้สามารถนำไปใช้เป็นพลังงานได้</p>
+<p>แนวคิดสำคัญของการจัดการก๊าซคือไม่ปล่อยให้ก๊าซสะสมหรือระบายออกโดยไม่มีการควบคุม แต่ใช้ระบบรวบรวมก๊าซ เช่น ท่อแนวตั้งหรือแนวนอน แล้วส่งก๊าซเข้าสู่การแยกความชื้น การกรอง และการปรับสภาพตามลักษณะการใช้งาน จากนั้นจึงนำไปใช้ผลิตไฟฟ้า ผลิตความร้อน หรือใช้เป็นเชื้อเพลิงในระบบที่เหมาะสม</p>
+<p>การนำก๊าซไปใช้ประโยชน์จึงเป็นการเปลี่ยนของเสียที่เกิดขึ้นตามธรรมชาติจากหลุมฝังกลบให้เป็นทรัพยากรพลังงาน ขณะเดียวกันก็ช่วยลดการปล่อยมีเทนสู่บรรยากาศและลดความเสี่ยงจากการสะสมของก๊าซในพื้นที่</p>`
+},
+{
+ title:"การรวบรวมก๊าซและการนำไปใช้ผลิตพลังงาน",
+ image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/LANDFILL.png",
+ alt:"ภาพประกอบ การรวบรวมก๊าซและการนำไปใช้ผลิตพลังงาน",
+ caption:"ภาพประกอบ: โครงสร้างหลุมฝังกลบและระบบก๊าซ (Wikimedia Commons)",
+ html:`<p>ระบบก๊าซหลุมฝังกลบไม่ได้จบเพียงการดูดก๊าซออกจากหลุม แต่ต้องควบคุมคุณภาพและสภาพของก๊าซก่อนใช้งาน ก๊าซที่รวบรวมมักมีความชื้นและองค์ประกอบอื่นปะปนอยู่ จึงอาจต้องผ่านการกำจัดความชื้น การกรอง การลดสารบางชนิด และการอัดหรือปรับแรงดันตามเทคโนโลยีที่เลือกใช้</p>
+<div class="detail-flow"><span>หลุมฝังกลบ</span><b>→</b><span>ระบบรวบรวม</span><b>→</b><span>ปรับสภาพก๊าซ</span><b>→</b><span>ใช้พลังงาน</span></div>
+<p>ในภาพรวม ก๊าซหลุมฝังกลบสามารถใช้เป็นแหล่งพลังงานหมุนเวียนจากของเสียได้ โดยรูปแบบการใช้ขึ้นอยู่กับปริมาณก๊าซ คุณภาพก๊าซ ระยะทางขนส่ง และความต้องการพลังงานของพื้นที่</p>`
+},
+{
+ title:"เตาเผาขยะและการสร้างความร้อน",
+ image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Incinerator.gif",
+ alt:"ภาพประกอบ เตาเผาขยะและการสร้างความร้อน",
+ caption:"ภาพประกอบ: เตาเผาขยะและการสร้างความร้อน",
+ html:`<p>การเผาขยะหรือ Incineration เป็นกระบวนการเผาไหม้ที่เปลี่ยนพลังงานเคมีในขยะให้เป็นพลังงานความร้อน ความร้อนที่เกิดขึ้นสามารถนำไปใช้กับหม้อไอน้ำเพื่อผลิตไอน้ำและต่อยอดไปสู่การผลิตไฟฟ้าได้ ประสิทธิภาพของกระบวนการขึ้นอยู่กับชนิดและองค์ประกอบของขยะ ความชื้น ค่าความร้อน ปริมาณอากาศ และการควบคุมอุณหภูมิ</p>
+<p>เตาเผาที่พบได้มีหลายรูปแบบ เช่น เตาเผาแบบตะกรับและเตาเผาแบบฟลูอิดไดส์เบด แต่ละแบบเหมาะกับลักษณะและขนาดของขยะต่างกัน จุดที่ต้องให้ความสำคัญควบคู่กับการสร้างพลังงานคือการจัดการมลพิษทางอากาศและขี้เถ้าที่เกิดหลังการเผาไหม้ เพราะสารบางชนิดอาจยังคงอยู่ในก๊าซไอเสียหรือขี้เถ้า</p>
+<div class="detail-callout"><strong>เชื่อมโยงกับแบบจำลอง:</strong> ส่วนเตาเผาเป็นจุดที่แสดงแนวคิด “พลังงานความร้อน → การสร้างไอน้ำ” ซึ่งเป็นพื้นฐานสำคัญก่อนเข้าสู่ระบบกังหันไอน้ำ</div>`
+},
+{
+ title:"หม้อไอน้ำแบบท่อน้ำและการผลิตไอน้ำ",
+ image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Water%20Tube%20Steam%20Boiler.jpg",
+ alt:"ภาพประกอบ หม้อไอน้ำแบบท่อน้ำและการผลิตไอน้ำ",
+ caption:"ภาพประกอบ: หม้อไอน้ำแบบท่อน้ำและการผลิตไอน้ำ",
+ html:`<p>หม้อไอน้ำแบบท่อน้ำ หรือ Water Tube Boiler เป็นหม้อไอน้ำที่ให้น้ำไหลอยู่ภายในท่อ ส่วนความร้อนจากการเผาไหม้อยู่ภายนอกท่อ ความร้อนจะถ่ายเทผ่านผนังท่อไปยังน้ำจนเกิดไอน้ำ หม้อไอน้ำขนาดใหญ่สามารถใช้กับระบบที่ต้องการไอน้ำปริมาณมากและความดันสูงได้</p>
+<p>ส่วนประกอบพื้นฐานที่ควรรู้ ได้แก่ Steam Drum ซึ่งทำหน้าที่พักและแยกไอน้ำกับน้ำ, Mud Drum ซึ่งอยู่ด้านล่างและเกี่ยวข้องกับการสะสมตะกอน และ Water Tube ซึ่งเป็นบริเวณหลักสำหรับการแลกเปลี่ยนความร้อนและการไหลเวียนของน้ำ นอกจากนี้ยังมีท่อ Downcomer และ Riser ที่ช่วยให้เกิดการไหลเวียนภายในระบบ</p>
+<p>ข้อดีของ Water Tube Boiler คือสามารถทำงานที่ความดันสูง ผลิตไอน้ำได้รวดเร็ว และเหมาะกับโรงงานอุตสาหกรรมขนาดใหญ่ แต่ต้องควบคุมคุณภาพน้ำและดูแลรักษาระบบอย่างสม่ำเสมอ เพราะตะกรันและสิ่งปนเปื้อนภายในท่อสามารถลดประสิทธิภาพและเพิ่มภาระการบำรุงรักษาได้</p>`
+},
+{
+ title:"กังหันไอน้ำและการเปลี่ยนพลังงาน",
+ image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/SteamTurbine.jpg",
+ alt:"ภาพประกอบ กังหันไอน้ำและการเปลี่ยนพลังงาน",
+ caption:"ภาพประกอบ: กังหันไอน้ำและการเปลี่ยนพลังงาน",
+ html:`<p>กังหันไอน้ำเป็นเครื่องจักรกลที่เปลี่ยนพลังงานของไอน้ำให้เป็นพลังงานกล เมื่อไอน้ำที่มีความดันและอุณหภูมิที่เหมาะสมเข้าสู่กังหัน จะเกิดแรงผลักหรือการเปลี่ยนแปลงโมเมนตัมที่ใบกังหัน ทำให้โรเตอร์หมุน การหมุนนี้สามารถส่งต่อไปยังเครื่องกำเนิดไฟฟ้าเพื่อผลิตกระแสไฟฟ้า</p>
+<p>แนวคิดสำคัญคือการเปลี่ยนพลังงานเป็นลำดับ ได้แก่ พลังงานความร้อนจากการเผาไหม้ → พลังงานของไอน้ำ → พลังงานกลจากการหมุนของกังหัน → พลังงานไฟฟ้าจากเครื่องกำเนิดไฟฟ้า หลังจากไอน้ำผ่านกังหัน พลังงานของไอน้ำจะลดลงและไอน้ำสามารถส่งต่อไปยังคอนเดนเซอร์</p>`
+},
+{
+ title:"คอนเดนเซอร์ ระบบหล่อเย็น และสุญญากาศ",
+ image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Steam%20Condenser%20%2824589706619%29.jpg",
+ alt:"ภาพประกอบ คอนเดนเซอร์ ระบบหล่อเย็น และสุญญากาศ",
+ caption:"ภาพประกอบ: คอนเดนเซอร์ ระบบหล่อเย็น และสุญญากาศ",
+ html:`<p>คอนเดนเซอร์ทำหน้าที่ควบแน่นไอน้ำที่ออกจากกังหันให้กลับเป็นน้ำ โดยถ่ายเทความร้อนจากไอน้ำไปยังน้ำหล่อเย็น ระบบคอนเดนเซอร์มีความสำคัญต่อวงจรไอน้ำ เพราะช่วยลดความดันด้านทางออกของกังหันและช่วยให้สามารถนำน้ำกลับเข้าสู่ระบบได้</p>
+<p>การเกิดสุญญากาศในคอนเดนเซอร์ช่วยให้ความดันด้านไอเสียของกังหันต่ำลง ซึ่งสัมพันธ์กับประสิทธิภาพและกำลังที่ได้จากกังหัน หากมีอากาศรั่วเข้าไปในคอนเดนเซอร์ การถ่ายเทความร้อนอาจลดลง ความดันย้อนกลับเพิ่มขึ้น และประสิทธิภาพของระบบอาจลดลง ดังนั้นระบบหล่อเย็น อุปกรณ์กำจัดอากาศ และการควบคุมสุญญากาศจึงเป็นส่วนสำคัญของวงจร</p>`
+},
+{
+ title:"ระบบบำบัดน้ำชะขยะและน้ำเสีย",
+ image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Wastewater%20Treatment%20Plant.jpg",
+ alt:"ภาพประกอบ ระบบบำบัดน้ำชะขยะและน้ำเสีย",
+ caption:"ภาพประกอบ: ระบบบำบัดน้ำชะขยะและน้ำเสีย",
+ html:`<p>น้ำชะขยะเกิดจากน้ำที่ไหลผ่านกองขยะและพาสารละลายหรือสารแขวนลอยออกมาด้วย จึงต้องรวบรวมและควบคุมไม่ให้ไหลออกสู่พื้นที่โดยไม่มีการบำบัด ระบบบำบัดน้ำเสียโดยทั่วไปสามารถเริ่มจากการบำบัดทางกายภาพ เช่น การใช้ตะแกรงเพื่อแยกเศษวัสดุและของแข็งแขวนลอย ก่อนเข้าสู่ขั้นตอนที่เหมาะสมกับลักษณะน้ำเสีย</p>
+<p>ในบริบทของแบบจำลอง ผู้เรียนควรเห็นความสัมพันธ์ของ <strong>บ่อเก็บน้ำชะขยะ → ปั๊มน้ำแรงดันสูง → ระบบบำบัดน้ำเสีย</strong> และเข้าใจว่าการจัดการน้ำเป็นอีกส่วนหนึ่งของการควบคุมผลกระทบสิ่งแวดล้อม ไม่ได้มีเฉพาะการควบคุมก๊าซหรืออากาศเท่านั้น</p>
+<div class="detail-callout"><strong>ประเด็นสำคัญ:</strong> น้ำชะขยะต้องได้รับการรวบรวม บำบัด และควบคุมการระบายให้เป็นไปตามข้อกำหนดที่เกี่ยวข้องกับสถานที่ฝังกลบ</div>`
+},
+{
+ title:"Bag Filter และการดักจับฝุ่น",
+ image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Bag%20filter.jpg",
+ alt:"ภาพประกอบ Bag Filter และการดักจับฝุ่น",
+ caption:"ภาพประกอบ: Bag Filter และการดักจับฝุ่น",
+ html:`<p>Bag Filter หรือ Dust Collector เป็นระบบที่ใช้ถุงกรองเพื่อดักจับฝุ่นและอนุภาคขนาดเล็กที่มากับอากาศหรือก๊าซ กระบวนการโดยทั่วไปเริ่มจากพัดลมหรือระบบดูดนำก๊าซที่มีฝุ่นเข้าสู่ตัวกรอง ฝุ่นจะสะสมบนผิวถุงกรอง ขณะที่ก๊าซที่ผ่านการกรองจะออกจากระบบ</p>
+<p>ระบบนี้จึงเชื่อมโยงกับแนวคิดการควบคุมมลพิษทางอากาศของโครงงาน โดยต้องคำนึงถึงชนิดฝุ่น อุณหภูมิของก๊าซ ความชื้น ความดัน และการบำรุงรักษาถุงกรอง เพื่อให้การดักจับมีประสิทธิภาพ</p>`
+},
+{
+ title:"Activated Carbon และการบำบัดอากาศ",
+ image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Activated%20Carbon%20Filters.png",
+ alt:"ภาพประกอบ Activated Carbon และการบำบัดอากาศ",
+ caption:"ภาพประกอบ: Activated Carbon และการบำบัดอากาศ",
+ html:`<p>ถ่านกัมมันต์ หรือ Activated Carbon เป็นวัสดุที่มีพื้นที่ผิวสูงและสามารถใช้ดูดซับสารบางชนิดจากอากาศ ระบบบำบัดอากาศด้วยถ่านกัมมันต์สามารถใช้เพื่อลดกลิ่นและสารบางประเภท เช่น สารอินทรีย์ระเหยง่าย (VOC) และไฮโดรเจนซัลไฟด์ในงานที่เหมาะสม</p>
+<p>เมื่อเชื่อมโยงกับแบบจำลอง Activated Carbon จึงเป็นตัวอย่างของขั้นตอนที่เน้น “การปรับคุณภาพก๊าซ/อากาศ” หลังจากการเกิดก๊าซหรือกระบวนการความร้อน ก่อนส่งต่อไปยังระบบระบาย</p>`
+},
+{
+ title:"ปล่องระบายและ Stack Flow Meter",
+ image:"https://commons.wikimedia.org/wiki/Special:Redirect/file/Chimney%20Smoke%20Stack.jpg",
+ alt:"ภาพประกอบ ปล่องระบายและ Stack Flow Meter",
+ caption:"ภาพประกอบ: ปล่องระบายและ Stack Flow Meter",
+ html:`<p>ปล่องเป็นโครงสร้างที่ใช้ระบายก๊าซไอเสียออกจากระบบ ส่วน Stack Flow Meter ใช้วัดอัตราการไหลของก๊าซภายในปล่อง ข้อมูลการไหลมีความสำคัญเพราะเมื่อนำมาร่วมกับความเข้มข้นของมลพิษ จะช่วยประเมินปริมาณการปล่อยมลพิษได้</p>
+<p>หลักการพื้นฐานของการหาอัตราการไหลเชิงปริมาตรคือ <strong>Q = vA</strong> โดย Q คืออัตราการไหล, v คือความเร็วของก๊าซ และ A คือพื้นที่หน้าตัดของปล่อง หากต้องการหาอัตราการไหลเชิงมวล จะต้องพิจารณาความหนาแน่นของก๊าซร่วมด้วย</p>`
+}
+];
+
+const iconNames=['♻️','⚡','🔥','♨️','🌀','💧','🚰','🧹','🫧','🏭'];
+const iconGrid=document.getElementById('topicIconGrid');
+let current=0;
+
+topics.forEach((t,i)=>{
+  const b=document.createElement('button');
+  b.type='button';
+  b.className='topic-icon-card';
+  b.innerHTML=`<span class="topic-icon">${iconNames[i]}</span><span class="topic-no">${String(i+1).padStart(2,'0')}</span><span class="topic-title">${t.title}</span>`;
+  b.dataset.topicIndex=String(i);
+  b.addEventListener('click',(e)=>{
+    e.preventDefault(); e.stopPropagation();
+    if(suppressClick){ suppressClick=false; return; }
+    showTopic(i);
+  });
+  iconGrid.appendChild(b);
+});
+
+const homeScreen=document.getElementById('homeScreen');
+const topicsScreen=document.getElementById('topicsScreen');
+const topicContentScreen=document.getElementById('topicContentScreen');
+
+function showTopics(){
+  homeScreen.classList.add('screen-hidden');
+  topicsScreen.classList.add('screen-visible');
+  topicsScreen.setAttribute('aria-hidden','false');
+  topicContentScreen.classList.remove('screen-visible');
+  topicContentScreen.setAttribute('aria-hidden','true');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function showHome(){
+  homeScreen.classList.remove('screen-hidden');
+  topicsScreen.classList.remove('screen-visible');
+  topicContentScreen.classList.remove('screen-visible');
+  topicsScreen.setAttribute('aria-hidden','true');
+  topicContentScreen.setAttribute('aria-hidden','true');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function showTopic(i){
+  current=(i+topics.length)%topics.length;
+  const t=topics[current];
+  document.querySelectorAll('.topic-icon-card').forEach((b,n)=>b.classList.toggle('selected',n===current));
+  document.getElementById('detailNumber').textContent=String(current+1).padStart(2,'0');
+  document.getElementById('detailProgress').textContent=`${String(current+1).padStart(2,'0')} / 10`;
+  document.getElementById('detailTitle').textContent=t.title;
+  document.getElementById('detailText').innerHTML=t.html;
+  const img=document.getElementById('detailImage');
+  img.src=t.image; img.alt=t.alt;
+  img.onerror=()=>{ img.onerror=null; img.src='model-placeholder.jpeg'; };
+  document.getElementById('detailCaption').textContent=t.caption;
+  homeScreen.classList.add('screen-hidden');
+  topicsScreen.classList.remove('screen-visible');
+  topicContentScreen.classList.add('screen-visible');
+  topicsScreen.setAttribute('aria-hidden','true');
+  topicContentScreen.setAttribute('aria-hidden','false');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function moveTopic(delta){showTopic(current+delta)}
+
+function centerTopicCard(index, behavior='smooth') {
+  const cards=topicSlider.querySelectorAll('.topic-icon-card');
+  const card=cards[(index+cards.length)%cards.length];
+  if(card) card.scrollIntoView({behavior,block:'nearest',inline:'center'});
+}
+
+document.getElementById('startLearning').onclick=()=>{ showTopics(); requestAnimationFrame(()=>{ if(desktopQuery.matches) applyDesktopCarousel(); else centerTopicCard(current,'auto'); }); };
+document.getElementById('backHome').onclick=showHome;
+document.getElementById('backTopics').onclick=showTopics;
+document.getElementById('detailPrev').onclick=()=>moveTopic(-1);
+document.getElementById('detailNext').onclick=()=>moveTopic(1);
+document.getElementById('detailPrevBottom').onclick=()=>moveTopic(-1);
+document.getElementById('detailNextBottom').onclick=()=>moveTopic(1);
+document.getElementById('backTopicsBottom').onclick=showTopics;
+
+const topicSlider=document.getElementById('topicIconGrid');
+let dragging=false,startX=0,moved=false,suppressClick=false;
+function applyCarousel(){
+  const cards=[...topicSlider.querySelectorAll('.topic-icon-card')];
+  const n=cards.length;
+  cards.forEach((c,i)=>{
+    const d=((i-current+n)%n);
+    let rel=d;
+    if(rel>n/2) rel-=n;
+    c.classList.remove('carousel-center','carousel-left','carousel-right','carousel-hidden');
+    if(rel===0)c.classList.add('carousel-center');
+    else if(rel===-1)c.classList.add('carousel-left');
+    else if(rel===1)c.classList.add('carousel-right');
+    else c.classList.add('carousel-hidden');
+    c.style.pointerEvents='auto';
+    c.style.cursor='pointer';
+  });
+}
+function setCurrentTopic(index, open=false){
+  current=(index+topics.length)%topics.length;
+  document.querySelectorAll('.topic-icon-card').forEach((b,n)=>b.classList.toggle('selected',n===current));
+  applyCarousel();
+  if(open) showTopic(current);
+}
+function rotateTopic(delta, open=false){
+  setCurrentTopic(current+delta,open);
+}
+
+document.getElementById('startLearning').onclick=()=>{ showTopics(); requestAnimationFrame(applyCarousel); };
+document.getElementById('backHome').onclick=showHome;
+document.getElementById('backTopics').onclick=showTopics;
+document.getElementById('detailPrev').onclick=()=>moveTopic(-1);
+document.getElementById('detailNext').onclick=()=>moveTopic(1);
+document.getElementById('detailPrevBottom').onclick=()=>moveTopic(-1);
+document.getElementById('detailNextBottom').onclick=()=>moveTopic(1);
+document.getElementById('backTopicsBottom').onclick=showTopics;
+
+const topicsPrevBtn=document.getElementById('topicsPrev');
+const topicsNextBtn=document.getElementById('topicsNext');
+topicsPrevBtn.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();rotateTopic(-1);});
+topicsNextBtn.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();rotateTopic(1);});
+
+// Unified pointer handling: click opens; drag/swipe rotates. No pointer capture is used.
+topicSlider.addEventListener('pointerdown',e=>{
+  if(e.target.closest('.topic-slider-btn')) return;
+  dragging=true; moved=false; startX=e.clientX;
+  topicSlider.classList.add('dragging');
+});
+window.addEventListener('pointermove',e=>{
+  if(!dragging) return;
+  if(Math.abs(e.clientX-startX)>10) moved=true;
+});
+window.addEventListener('pointerup',e=>{
+  if(!dragging) return;
+  const dx=e.clientX-startX;
+  dragging=false; topicSlider.classList.remove('dragging');
+  if(moved && Math.abs(dx)>35){
+    suppressClick=true;
+    rotateTopic(dx<0?1:-1);
+    setTimeout(()=>suppressClick=false,250);
+  }
+});
+window.addEventListener('pointercancel',()=>{dragging=false;topicSlider.classList.remove('dragging');});
+
+// Genuine click on any visible card opens its topic.
+topicSlider.addEventListener('click',e=>{
+  const card=e.target.closest('.topic-icon-card');
+  if(!card || suppressClick) return;
+  const i=Number(card.dataset.topicIndex);
+  if(Number.isInteger(i) && i>=0 && i<topics.length){
+    e.preventDefault(); e.stopPropagation(); showTopic(i);
+  }
+},true);
+
+window.addEventListener('resize',applyCarousel);
+applyCarousel();
+const contentNav=document.getElementById('contentNav');
+const contentSubmenu=document.getElementById('contentSubmenu');
+topics.forEach((t,i)=>{
+  const a=document.createElement('a');
+  a.href='#topic-'+i;
+  const topicEmojis=['🗑️','🔄','🔥','♨️','⚙️','💧','🧪','🧹','🌫️','🏭'];
+  a.textContent=`${topicEmojis[i]} ${t.title}`;
+  a.addEventListener('click',e=>{
+    e.preventDefault();
+    menuDropdown.classList.remove('menu-open');
+    contentSubmenu.classList.remove('submenu-open');
+    contentNav.setAttribute('aria-expanded','false');
+    showTopic(i);
+    history.replaceState(null,'','#topic-'+i);
+  });
+  contentSubmenu.appendChild(a);
+});
+contentNav.addEventListener('click',e=>{
+  e.stopPropagation();
+  const open=contentSubmenu.classList.toggle('submenu-open');
+  contentNav.setAttribute('aria-expanded',String(open));
+});
+
+if(location.hash==='#topicsScreen'){setTimeout(showTopics,0);}
+if(location.hash.startsWith('#topic-')){const n=Number(location.hash.slice(7)); if(Number.isInteger(n)&&n>=0&&n<topics.length) setTimeout(()=>showTopic(n),0);}
+window.addEventListener('hashchange',()=>{
+  if(location.hash==='#topicsScreen') showTopics();
+  else if(location.hash.startsWith('#topic-')){const n=Number(location.hash.slice(7)); if(Number.isInteger(n)&&n>=0&&n<topics.length) showTopic(n);}
+  else if(location.hash==='#homeScreen' || location.hash==='') showHome();
+});
+
+document.addEventListener('keydown',e=>{
+  if(topicContentScreen.classList.contains('screen-visible')){
+    if(e.key==='ArrowLeft') moveTopic(-1);
+    if(e.key==='ArrowRight') moveTopic(1);
+    if(e.key==='Escape') showTopics();
+  }
+});
+</script>
+</body>
+</html>
